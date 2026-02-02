@@ -67,22 +67,22 @@ Desarrollar una plataforma web integral para la gestión y automatización de ci
 
 # Tecnologias a utilizar
 Backend & Framework:
--PHP: Lenguaje principal del lado del servidor.
--Laravel: Framework de PHP utilizado para la estructura MVC, enrutamiento y lógica de negocio.
--Laravel Jetstream: Kit de inicio para la autenticación robusta (Login, Registro, Verificación de Email, Gestión de Sesiones).
+- [PHP: Lenguaje principal del lado del servidor.]
+- [Laravel: Framework de PHP utilizado para la estructura MVC, enrutamiento y lógica de negocio.]
+- [Laravel Jetstream: Kit de inicio para la autenticación robusta (Login, Registro, Verificación de Email, Gestión de Sesiones).]
 
 Frontend & Interfaz:
--Livewire: Framework full-stack para crear interfaces dinámicas sin salir de PHP (usado para componentes reactivos como formularios de citas).
--Blade: Motor de plantillas de Laravel.
--Tailwind CSS: Framework de estilos (incluido por defecto en Jetstream) para el diseño visual.
+- [Livewire: Framework full-stack para crear interfaces dinámicas sin salir de PHP (usado para componentes reactivos como formularios de citas).]
+- [Blade: Motor de plantillas de Laravel.]
+- [Tailwind CSS: Framework de estilos (incluido por defecto en Jetstream) para el diseño visual.]
 
 Base de Datos:
--MySQL / MariaDB: Sistema de gestión de base de datos relacional (ejecutado a través de XAMPP).
+- [MySQL / MariaDB: Sistema de gestión de base de datos relacional (ejecutado a través de XAMPP).]
 
 Herramientas de Desarrollo:
--Composer: Gestor de dependencias de PHP.
--Node.js & NPM: Para la compilación de activos (Vite) y gestión de paquetes de frontend.
--Git & GitHub: Para el control de versiones y trabajo colaborativo.
--Visual Studio Code: Entorno de desarrollo integrado (IDE).
--XAMPP: Entorno de servidor local (Apache + MySQL).
+- [Composer: Gestor de dependencias de PHP.]
+- [Node.js & NPM: Para la compilación de activos (Vite) y gestión de paquetes de frontend.]
+- [Git & GitHub: Para el control de versiones y trabajo colaborativo.]
+- [Visual Studio Code: Entorno de desarrollo integrado (IDE).]
+- [XAMPP: Entorno de servidor local (Apache + MySQL).]
 
