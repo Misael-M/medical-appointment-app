@@ -59,7 +59,30 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+
 # medical-appointment-app
-# objetivo general: desarrollar una aplicación de citas medicas
-# Tecnologias a utilizar: Livewire y Jetstream por medio de composer
+
+# objetivo general
+Desarrollar una plataforma web integral para la gestión y automatización de citas médicas, que permita a los administradores gestionar el personal médico, a los doctores administrar sus horarios y a los pacientes agendar consultas de manera eficiente. El sistema implementará una arquitectura segura y escalable utilizando el ecosistema de Laravel, garantizando la autenticación de usuarios, la gestión de roles y la integridad de los datos clínicos.
+
+# Tecnologias a utilizar
+Backend & Framework:
+- [PHP: Lenguaje principal del lado del servidor.]
+- [Laravel: Framework de PHP utilizado para la estructura MVC, enrutamiento y lógica de negocio.]
+- [Laravel Jetstream: Kit de inicio para la autenticación robusta (Login, Registro, Verificación de Email, Gestión de Sesiones).]
+
+Frontend & Interfaz:
+- [Livewire: Framework full-stack para crear interfaces dinámicas sin salir de PHP (usado para componentes reactivos como formularios de citas).]
+- [Blade: Motor de plantillas de Laravel.]
+- [Tailwind CSS: Framework de estilos (incluido por defecto en Jetstream) para el diseño visual.]
+
+Base de Datos:
+- [MySQL / MariaDB: Sistema de gestión de base de datos relacional (ejecutado a través de XAMPP).]
+
+Herramientas de Desarrollo:
+- [Composer: Gestor de dependencias de PHP.]
+- [Node.js & NPM: Para la compilación de activos (Vite) y gestión de paquetes de frontend.]
+- [Git & GitHub: Para el control de versiones y trabajo colaborativo.]
+- [Visual Studio Code: Entorno de desarrollo integrado (IDE).]
+- [XAMPP: Entorno de servidor local (Apache + MySQL).]
 
