@@ -42,7 +42,7 @@ aria-label="Sidebar">
    <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
       <a href="/" class="flex items-center ps-2.5 mb-5">
          <img src="{{asset('images/ejemplo.jpg')}}" class="h-6 me-3" alt="Flowbite Logo" />
-         <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">Flowbite</span>
+         <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">Healthify</span>
       </a>
       <ul class="space-y-2 font-medium">
         @foreach ($links as $link)
