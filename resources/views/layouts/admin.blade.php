@@ -15,10 +15,17 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         
-        <script src="https://kit.fontawesome.com/53e6ea00a0.js" crossorigin="anonymous"></script>
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Font awesome css -->
+        <script src="https://kit.fontawesome.com/53e6ea00a0.js" crossorigin="anonymous"></script>
+
+        <!--SweetAlert-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        {{--Wire UI--}}
+        <wireui:scripts />
 
         <!-- Styles -->
         @livewireStyles
@@ -30,14 +37,27 @@
 @include('layouts.includes.admin.sidebar')
 
 <div class="p-4 sm:ml-64 mt-14">
-   <div class="mt-14">
+   <div class="mt-14 flex justify-between items-center w-full">
         @include('layouts.includes.admin.breadcrumb')
+        @isset($action)
+            <div>
+                {{ $action }}
+            </div>
+            @endisset
    </div>
     {{ $slot }}
 
 </div>
 
         @stack('modals')
+
+        {{--Mostrar sweetalert--}}
+
+        @if(session('swal'))
+            <script>
+                Swal.fire(@json(session('swal')));
+            </script>
+        @endif
 
         @livewireScripts
         <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
