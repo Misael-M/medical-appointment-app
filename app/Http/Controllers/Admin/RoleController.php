@@ -1,4 +1,4 @@
-<?php
+<?php //Texto de pruebaaaaaa
 
 namespace App\Http\Controllers\Admin;
 
@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 class RoleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
      */
     public function index()
     {
