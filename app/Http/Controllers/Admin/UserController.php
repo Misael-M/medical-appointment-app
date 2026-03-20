@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 
@@ -117,17 +118,22 @@ class UserController extends Controller
      */
     public function destroy(User $usuario)
     {
-        //Borrar elemento
+        // 1. EL CANDADO (Va primero). Verificamos si el ID del usuario coincide con el logueado.
+        if ($usuario->id === Auth::user()->id) {
+            abort(403, 'No puedes borrar tu propio usuario');
+        }
+
+        // 2. Si el código llega hasta aquí, significa que NO es él mismo. Procedemos a borrarlo.
         $usuario->delete();
 
-        //Configuracion de operación exitosa
-         session()->flash('swal', [
+        // 3. Mostramos la alerta de éxito
+        session()->flash('swal', [
             'icon' => 'success', 
             'title' => 'Usuario eliminado correctamente',
             'text' => 'El usuario ha sido borrado correctamente',
-         ]);
+        ]);
 
-         //Redireccion
+        // 4. Redireccionamos a la tabla
         return redirect(route('admin.usuarios.index'));
-    }
+     }
 }
