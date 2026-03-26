@@ -1,4 +1,4 @@
-<?php //Texto de pruebaaaaaa
+<?php
 
 namespace App\Http\Controllers\Admin;
 
@@ -23,7 +23,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.usuarios.create');
+        $roles = Role::all();
+        return view('admin.usuarios.create', compact('roles'));
     }
 
     /**
@@ -31,30 +32,42 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //Validar que se cree bien
+        // Validar que se cree bien
         $request->validate([
-            'name' => 'required|unique:users,name',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|confirmed',
+            'id_number' => 'required|string|min:5|max:20|unique:users,id_number',
+            'phone' => 'required|string|min:10',
+            'address' => 'required|string|max:250',
+            'role_id' => 'required|exists:roles,id'
         ]);
 
-        //Si pasa la validacion. creara el rol
-        User::create([
+        // Si pasa la validación, crea el usuario
+        $usuario = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => bcrypt($request->password), // Contraseña segura
+            'id_number' => $request->id_number,
+            'phone' => $request->phone, 
+            'address' => $request->address,
         ]);
 
-        //Confitmacion de operacion exitosa
+        // 1. Buscamos el rol exacto por su ID de forma segura
+        $role = Role::findById($request->role_id);
+        
+        // 2. Le asignamos ese rol al nuevo usuario
+        $usuario->assignRole($role);
+
+        // Confirmación de operación exitosa
         session()->flash('swal', [
             'icon' => 'success', 
             'title' => 'Usuario creado correctamente',
             'text' => 'El usuario ha sido creado correctamente',
         ]);
 
-        //Redireccionara a la tabla principal
-        return redirect(route('admin.usuarios.index'));//->with('success', 'User created successfully.');
-
+        // Redireccionará a la tabla principal
+        return redirect(route('admin.usuarios.index'));
     }
 
     /**
@@ -70,8 +83,7 @@ class UserController extends Controller
      */
     public function edit(User $usuario)
     {  
-        $roles = Role::all(); //Linea para obtener todos los roles
-
+        $roles = Role::all(); // Línea para obtener todos los roles
         return view('admin.usuarios.edit', compact('usuario', 'roles'));
     }
 
@@ -80,37 +92,56 @@ class UserController extends Controller
      */
     public function update(Request $request, User $usuario)
     {
-        //Validar que se inserte bien y que excluya la fila que se edita
+        // Validación que excluye la fila que se edita para permitir cambios individuales
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $usuario->id,
-            'role' => 'required'  
+            'id_number' => 'required|string|min:5|max:20|unique:users,id_number,' . $usuario->id,
+            'phone' => 'required|string|min:10',
+            'address' => 'required|string|max:250',
+            'role_id' => 'required|exists:roles,id',
+            'password' => 'nullable|string|min:8|confirmed' // La contraseña es opcional al editar
         ]);
 
-        //Si pasa la validacion, editara el rol
+        // Si pasa la validación, edita los datos básicos
         $usuario->update([
             'name' => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
+            'id_number' => $request->id_number,
+            'phone' => $request->phone, 
+            'address' => $request->address,
         ]);
 
-        //Actualizar role
-        $usuario->syncRoles($request->role);
+        // Actualizar contraseña solo si el usuario escribió una nueva
+        if($request->filled('password')){
+            $usuario->password = bcrypt($request->password);
+            $usuario->save();
+        }
 
+        // Actualizar rol usando Spatie
+        $role = Role::findById($request->role_id);
+        $usuario->syncRoles($role);
+
+        // Configuración de operación exitosa
         session()->flash('swal', [
-            'icon' => 'success', 
-            'title' => 'Usuario actualizado',
-            'text' => 'El usuario y su rol han sido modificados correctamente',
-        ]);
-
-        //Configuracion de operación exitosa
-         session()->flash('swal', [
             'icon' => 'success', 
             'title' => 'Usuario actualizado correctamente',
             'text' => 'El usuario ha sido modificado correctamente',
         ]);
 
-        //Redireccionada a la misma vista de editar
-        return redirect(route('admin.usuarios.edit', $usuario));
+        // Si el usuario actualizado es un paciente, maneja su perfil médico
+        if($usuario->hasRole('Paciente')){
+            // Verificamos si ya tiene un perfil de paciente para no crear duplicados
+            if (!$usuario->patient) {
+                $patient = $usuario->patient()->create([]);
+                return redirect()->route('admin.patients.edit', $patient);
+            }
+            // Si ya era paciente, lo mandamos a editar su perfil existente
+            return redirect()->route('admin.patients.edit', $usuario->patient);
+        }
+
+        // Redireccionado a la tabla de usuarios
+        return redirect(route('admin.usuarios.index'));
     }
 
     /**
@@ -119,7 +150,7 @@ class UserController extends Controller
     public function destroy(User $usuario)
     {
         // 1. EL CANDADO (Va primero). Verificamos si el ID del usuario coincide con el logueado.
-        if ($usuario->id === Auth::user()->id) {
+        if ($usuario->id === Auth::id()) {
             abort(403, 'No puedes borrar tu propio usuario');
         }
 
@@ -135,5 +166,5 @@ class UserController extends Controller
 
         // 4. Redireccionamos a la tabla
         return redirect(route('admin.usuarios.index'));
-     }
+    }
 }

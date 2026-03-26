@@ -18,9 +18,15 @@
         ] ,
         [
         'name'=>'Usuarios',
-        'icon'=>'fa-solid fa-user',
+        'icon'=>'fa-solid fa-users',
         'href'=>route('admin.usuarios.index'),
         'active'=> request()->routeIs('admin.usuarios.*')
+        ] ,
+        [
+        'name'=>'Pacientes',
+        'icon'=>'fa-solid fa-user-injured',
+        'href'=>route('admin.patients.index'),
+        'active'=> request()->routeIs('admin.patients.*')
         ] ,
     ];
 @endphp

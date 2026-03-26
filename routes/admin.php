@@ -11,3 +11,6 @@ Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
 
 //Gestion de usuarios
 Route::resource('usuarios', App\Http\Controllers\Admin\UserController::class);
+
+//Gestion de pacientes
+Route::resource('patients', App\Http\Controllers\Admin\PatientController::class);

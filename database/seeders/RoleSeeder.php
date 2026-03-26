@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role; 
+use App\Models\User;
 
 class RoleSeeder extends Seeder
 {
@@ -18,7 +19,8 @@ class RoleSeeder extends Seeder
             'Paciente',
             'Doctor',
             'Recepcionista',
-            'Super administrador'
+            'Super administrador',
+            'Administrador'
         ];
 
         //Crear roles
@@ -27,5 +29,6 @@ class RoleSeeder extends Seeder
                 'name' => $role 
             ]);
         }
+
     }
 }

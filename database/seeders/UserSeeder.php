@@ -11,19 +11,16 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $nombres = [
-            'Jose',
-            'Maria',
-            'Morelos',
-            'Pavon'
-        ];
-
-        foreach ($nombres as $nombre){
-           User::create([
-                'name' => $nombre,
-                'email' => strtolower($nombre) . '@ejemplo.com', // Agregamos el email
-                'password' => bcrypt('12345678') // Agregamos el password
-            ]);
-        }
+        
+        //Crear usuario de prueba cada vez que se ejecuten las migraciones
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt('12345678'),
+            'id_number' => '123456789',
+            'phone' => '9999999999',
+            'address' => 'Test address',
+        ])->assignRole('Administrador');
+    
     }
 }

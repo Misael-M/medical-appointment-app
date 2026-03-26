@@ -18,12 +18,8 @@ class DatabaseSeeder extends Seeder
         //Llamar a los seeder cercanos
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(BloodTypeSeeder::class);
 
-        //Crear usuario de prueba cada vez que se ejecuten las migraciones
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('12345678'),
-        ]);
+        
     }
 }

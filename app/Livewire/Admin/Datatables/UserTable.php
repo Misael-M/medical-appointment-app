@@ -4,12 +4,20 @@ namespace App\Livewire\Admin\Datatables;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Spatie\Permission\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserTable extends DataTableComponent
 {
-    protected $model = User::class;
+    //protected $model = User::class;
+
+    //Este metodo define el modelo
+    public function builder(): Builder
+    {
+        //Devuelve la relacion con roles
+        return User::query()
+        ->with('roles');
+    }
 
     public function configure(): void
     {
@@ -21,14 +29,19 @@ class UserTable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
-            Column::make("Name", "name")
+            Column::make("Nombre", "name")
                 ->sortable(),
             Column::make("Correo", "email")
                 ->sortable(),
-            Column::make("Rol") //Columna para los roles
+            Column::make("Numero de id", "id_number")
+                ->sortable(),
+            Column::make("Telefono", "phone")
+                ->sortable(),
+            Column::make("Role", "roles") //Columna para los roles
                 ->label(function($row){
-                    return $row->roles->pluck('name')->implode(', ');
+                    return $row->roles->first()->name ?? 'Sin rol';
                 }),
+            
                 
             Column::make("Acciones")
                 ->label(function($row){
