@@ -59,6 +59,13 @@ class UserController extends Controller
         // 2. Le asignamos ese rol al nuevo usuario
         $usuario->assignRole($role);
 
+        // 3. Crear el perfil respectivo según el rol
+        if ($usuario->hasRole('Paciente')) {
+            $usuario->patient()->create([]);
+        } elseif ($usuario->hasRole('Doctor')) {
+            $usuario->doctor()->create([]);
+        }
+
         // Confirmación de operación exitosa
         session()->flash('swal', [
             'icon' => 'success', 
@@ -131,13 +138,20 @@ class UserController extends Controller
 
         // Si el usuario actualizado es un paciente, maneja su perfil médico
         if($usuario->hasRole('Paciente')){
-            // Verificamos si ya tiene un perfil de paciente para no crear duplicados
             if (!$usuario->patient) {
                 $patient = $usuario->patient()->create([]);
                 return redirect()->route('admin.patients.edit', $patient);
             }
-            // Si ya era paciente, lo mandamos a editar su perfil existente
             return redirect()->route('admin.patients.edit', $usuario->patient);
+        }
+
+        // Si el usuario actualizado es un doctor, maneja su perfil médico
+        if($usuario->hasRole('Doctor')){
+            if (!$usuario->doctor) {
+                $doctor = $usuario->doctor()->create([]);
+                return redirect()->route('admin.doctors.edit', $doctor);
+            }
+            return redirect()->route('admin.doctors.edit', $usuario->doctor);
         }
 
         // Redireccionado a la tabla de usuarios

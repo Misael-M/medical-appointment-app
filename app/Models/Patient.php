@@ -24,8 +24,14 @@ protected $fillable = [
     }
 
     //Relacion uno a uno inversa
-    public function bloodtype(){
+    public function bloodType(){
         return $this->belongsTo(BloodType::class);
+    }
+
+    // Relación uno a muchos con Appointment
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 
 }
