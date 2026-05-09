@@ -33,8 +33,21 @@
                 <x-wire-input label="Numero de id" name="id_number" placeholder="Ej. 123456789" autocomplete="off" 
                 required inputmode="numeric" value="{{ old('id_number', $usuario->id_number) }}"></x-wire-input>
 
-                <x-wire-input label="Telefono" name="phone" placeholder="Ej. 9999999999" autocomplete="tel" 
-                required inputmode="tel" value="{{ old('phone', $usuario->phone) }}"></x-wire-input>
+                <div class="flex space-x-2">
+                    <div class="w-1/3">
+                        <x-wire-native-select label="Lada" name="country_code" required>
+                            <option value="52" @selected(old('country_code', $usuario->country_code) == '52')>+52 (MX)</option>
+                            <option value="1" @selected(old('country_code', $usuario->country_code) == '1')>+1 (US/CA)</option>
+                            <option value="34" @selected(old('country_code', $usuario->country_code) == '34')>+34 (ES)</option>
+                            <option value="54" @selected(old('country_code', $usuario->country_code) == '54')>+54 (AR)</option>
+                            <option value="57" @selected(old('country_code', $usuario->country_code) == '57')>+57 (CO)</option>
+                        </x-wire-native-select>
+                    </div>
+                    <div class="w-2/3">
+                        <x-wire-input label="Teléfono" name="phone_number" placeholder="Ej. 9999999999" autocomplete="tel" 
+                        required inputmode="tel" value="{{ old('phone_number', $usuario->phone) }}"></x-wire-input>
+                    </div>
+                </div>
 
                 </div>
 

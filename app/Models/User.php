@@ -32,6 +32,7 @@ class User extends Authenticatable
         'email',
         'password',
         'id_number',
+        'country_code',
         'phone',
         'address'
     ];

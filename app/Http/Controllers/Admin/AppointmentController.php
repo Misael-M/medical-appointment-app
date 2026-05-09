@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendAppointmentCreatedNotifications;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
@@ -65,7 +66,9 @@ class AppointmentController extends Controller
 
         $validated['status'] = $validated['status'] ?? 1;
 
-        Appointment::create($validated);
+        $appointment = Appointment::create($validated);
+
+        SendAppointmentCreatedNotifications::dispatch($appointment);
 
         session()->flash('swal', [
             'icon'  => 'success',

@@ -38,7 +38,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'id_number' => 'required|string|min:5|max:20|unique:users,id_number',
-            'phone' => 'required|string|min:10',
+            'country_code' => 'required|string|max:4',
+            'phone_number' => 'required|string|min:10',
             'address' => 'required|string|max:250',
             'role_id' => 'required|exists:roles,id'
         ]);
@@ -49,7 +50,8 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password), // Contraseña segura
             'id_number' => $request->id_number,
-            'phone' => $request->phone, 
+            'country_code' => $request->country_code,
+            'phone' => ltrim($request->phone_number, '0'), 
             'address' => $request->address,
         ]);
 
@@ -104,7 +106,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $usuario->id,
             'id_number' => 'required|string|min:5|max:20|unique:users,id_number,' . $usuario->id,
-            'phone' => 'required|string|min:10',
+            'country_code' => 'required|string|max:4',
+            'phone_number' => 'required|string|min:10',
             'address' => 'required|string|max:250',
             'role_id' => 'required|exists:roles,id',
             'password' => 'nullable|string|min:8|confirmed' // La contraseña es opcional al editar
@@ -115,7 +118,8 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'id_number' => $request->id_number,
-            'phone' => $request->phone, 
+            'country_code' => $request->country_code,
+            'phone' => ltrim($request->phone_number, '0'), 
             'address' => $request->address,
         ]);
 
